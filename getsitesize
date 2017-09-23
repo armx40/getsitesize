@@ -1,0 +1,10 @@
+#!/bin/bash
+if [ "$#" -ne 1 ]; then
+	    echo -e "\e[31mERROR.\e[0m Please enter a URL."
+	    exit
+fi
+echo "Please wait..."
+wget --spider -o log -r -p -e robots=off -U mozilla $1
+echo -e "\e[92mDone.\e[0m"
+cat log|grep -e "Length"|awk '{ SUM += $2 }; END { printf("%.2f MB\n",SUM/1000/1000) }'
+
